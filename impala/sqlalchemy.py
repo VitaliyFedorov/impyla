@@ -245,6 +245,11 @@ class ImpalaDialect(DefaultDialect):
         ]
         return tables
 
+    def get_view_names(self, connection, schema=None, **kw):
+        # Impala doesn't distinguish between tables and view when calling
+        # SHOW TABLES. So return a blank list.
+        return []
+
     def get_schema_names(self, connection, **kw):
         rp = connection.execute("SHOW SCHEMAS")
         return [r[0] for r in rp]
